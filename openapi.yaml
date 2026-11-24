@@ -1,0 +1,1022 @@
+openapi: 3.0.3
+info:
+  title: Movie API
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: Genres
+- name: Directors
+- name: Movies
+- name: Reviews
+paths:
+  /genres:
+    get:
+      tags:
+      - Genres
+      summary: GET /genres
+      parameters:
+      - &id001
+        $ref: '#/components/parameters/page'
+      - &id002
+        $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenrePage'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Genres
+      summary: POST /genres
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenreCreate'
+            example:
+              name: Documentary
+      responses:
+        '201':
+          description: Шинээр үүссэн
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Давхардал эсвэл холбоотой бүртгэл
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /genres/{id}:
+    get:
+      tags:
+      - Genres
+      summary: GET /genres/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenreDetail'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+      - Genres
+      summary: PATCH /genres/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenrePatch'
+            example:
+              name: Documentary Films
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Давхардал эсвэл холбоотой бүртгэл
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Genres
+      summary: DELETE /genres/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '204':
+          description: Амжилттай устсан
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Давхардал эсвэл холбоотой бүртгэл
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /directors:
+    get:
+      tags:
+      - Directors
+      summary: GET /directors
+      parameters:
+      - *id001
+      - *id002
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorPage'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Directors
+      summary: POST /directors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectorCreate'
+            example:
+              name: Demo Director
+              birthYear: 1985
+      responses:
+        '201':
+          description: Шинээр үүссэн
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Director'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /directors/{id}:
+    get:
+      tags:
+      - Directors
+      summary: GET /directors/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorDetail'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+      - Directors
+      summary: PATCH /directors/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectorPatch'
+            example:
+              birthYear: 1987
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Director'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Directors
+      summary: DELETE /directors/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '204':
+          description: Амжилттай устсан
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /movies:
+    get:
+      tags:
+      - Movies
+      summary: GET /movies
+      parameters:
+      - *id001
+      - *id002
+      - name: q
+        in: query
+        schema: &id003
+          type: string
+          minLength: 1
+      - name: genreId
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+      - name: directorId
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+      - name: hasDirector
+        in: query
+        schema:
+          type: boolean
+      - name: minYear
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+      - name: maxYear
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+      - name: isShowing
+        in: query
+        schema:
+          type: boolean
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - title
+          - year
+          - durationMin
+          - createdAt
+          default: createdAt
+      - name: order
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviePage'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Movies
+      summary: POST /movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieCreate'
+            example:
+              title: Demo Movie
+              year: 2024
+              durationMin: 90
+              genreId: 1
+              directorId: 1
+      responses:
+        '201':
+          description: Шинээр үүссэн
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /movies/{id}:
+    get:
+      tags:
+      - Movies
+      summary: GET /movies/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieDetail'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+      - Movies
+      summary: PATCH /movies/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoviePatch'
+            example:
+              durationMin: 95
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Movies
+      summary: DELETE /movies/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '204':
+          description: Амжилттай устсан
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /genres/{id}/movies:
+    get:
+      tags:
+      - Genres
+      summary: GET /genres/{id}/movies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      - *id001
+      - *id002
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviePage'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /directors/{id}/movies:
+    get:
+      tags:
+      - Directors
+      summary: GET /directors/{id}/movies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      - *id001
+      - *id002
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviePage'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /movies/{id}/reviews:
+    get:
+      tags:
+      - Reviews
+      summary: GET /movies/{id}/reviews
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      - *id001
+      - *id002
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - rating
+          - createdAt
+      - name: order
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewPage'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Reviews
+      summary: POST /movies/{id}/reviews
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewCreate'
+            example:
+              rating: 5
+              authorName: Demo Reviewer
+      responses:
+        '201':
+          description: Шинээр үүссэн
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Давхардал эсвэл холбоотой бүртгэл
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /reviews/{id}:
+    patch:
+      tags:
+      - Reviews
+      summary: PATCH /reviews/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewPatch'
+            example:
+              rating: 4
+      responses:
+        '200':
+          description: Амжилттай
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Reviews
+      summary: DELETE /reviews/{id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '204':
+          description: Амжилттай устсан
+        '400':
+          description: Хүсэлт буруу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Бүртгэл олдсонгүй
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message: *id003
+        field: *id003
+      required:
+      - message
+      example:
+        message: Утга буруу байна.
+        field: rating
+    PageMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 50
+        total:
+          type: integer
+          minimum: 0
+        pages:
+          type: integer
+          minimum: 0
+      required:
+      - page
+      - limit
+      - total
+      - pages
+    Genre:
+      type: object
+      properties:
+        id: &id005
+          type: integer
+          minimum: 1
+        createdAt: &id006
+          type: string
+          format: date-time
+        name: *id003
+      required:
+      - id
+      - createdAt
+      - name
+    GenreDetail:
+      allOf:
+      - $ref: '#/components/schemas/Genre'
+      - type: object
+        properties:
+          movieCount:
+            type: integer
+            minimum: 0
+        required:
+        - movieCount
+    GenrePage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+      required:
+      - data
+      - meta
+    GenreCreate:
+      type: object
+      properties: &id004
+        name: *id003
+      required:
+      - name
+      additionalProperties: false
+    GenrePatch:
+      type: object
+      properties: *id004
+      required:
+      - name
+      additionalProperties: false
+      minProperties: 1
+    Director:
+      type: object
+      properties:
+        id: *id005
+        createdAt: *id006
+        name: *id003
+        birthYear: &id007
+          type: integer
+          minimum: 1
+          nullable: true
+      required:
+      - id
+      - createdAt
+      - name
+      - birthYear
+    DirectorDetail:
+      allOf:
+      - $ref: '#/components/schemas/Director'
+      - type: object
+        properties:
+          movieCount:
+            type: integer
+            minimum: 0
+        required:
+        - movieCount
+    DirectorPage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Director'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+      required:
+      - data
+      - meta
+    DirectorCreate:
+      type: object
+      properties: &id008
+        name: *id003
+        birthYear: *id007
+      required:
+      - name
+      additionalProperties: false
+    DirectorPatch:
+      type: object
+      properties: *id008
+      additionalProperties: false
+      minProperties: 1
+    Movie:
+      type: object
+      properties:
+        id: *id005
+        createdAt: *id006
+        title: *id003
+        year: &id009
+          type: integer
+          minimum: 1900
+        durationMin: &id010
+          type: integer
+          minimum: 1
+        description: &id011
+          type: string
+          minLength: 1
+          nullable: true
+        isShowing: &id012
+          type: boolean
+          default: false
+        genreId: &id013
+          type: integer
+          minimum: 1
+        directorId: &id014
+          type: integer
+          minimum: 1
+          nullable: true
+        genre:
+          $ref: '#/components/schemas/Genre'
+        director:
+          type: object
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Director'
+      required:
+      - id
+      - createdAt
+      - title
+      - year
+      - durationMin
+      - description
+      - isShowing
+      - genreId
+      - directorId
+      - genre
+      - director
+    MovieDetail:
+      allOf:
+      - $ref: '#/components/schemas/Movie'
+      - type: object
+        properties:
+          reviewCount:
+            type: integer
+            minimum: 0
+        required:
+        - reviewCount
+    MoviePage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movie'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+      required:
+      - data
+      - meta
+    MovieCreate:
+      type: object
+      properties: &id015
+        title: *id003
+        year: *id009
+        durationMin: *id010
+        description: *id011
+        isShowing: *id012
+        genreId: *id013
+        directorId: *id014
+      required:
+      - title
+      - year
+      - durationMin
+      - genreId
+      additionalProperties: false
+    MoviePatch:
+      type: object
+      properties: *id015
+      additionalProperties: false
+      minProperties: 1
+    Review:
+      type: object
+      properties:
+        id: *id005
+        createdAt: *id006
+        rating: &id016
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment: &id017
+          type: string
+          minLength: 1
+          nullable: true
+        authorName: *id003
+        movieId:
+          type: integer
+          minimum: 1
+      required:
+      - id
+      - createdAt
+      - rating
+      - comment
+      - authorName
+      - movieId
+    ReviewPage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+      required:
+      - data
+      - meta
+    ReviewCreate:
+      type: object
+      properties: &id018
+        rating: *id016
+        comment: *id017
+        authorName: *id003
+      required:
+      - rating
+      - authorName
+      additionalProperties: false
+    ReviewPatch:
+      type: object
+      properties: *id018
+      additionalProperties: false
+      minProperties: 1
+  parameters:
+    page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 10
