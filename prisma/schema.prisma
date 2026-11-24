@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Genre {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  movies    Movie[]
+}
+
+model Director {
+  id        Int      @id @default(autoincrement())
+  name      String
+  birthYear Int?
+  createdAt DateTime @default(now())
+  movies    Movie[]
+}
+
+model Movie {
+  id          Int       @id @default(autoincrement())
+  title       String
+  year        Int
+  durationMin Int
+  description String?
+  isShowing   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  genreId     Int
+  genre       Genre     @relation(fields: [genreId], references: [id], onDelete: Restrict)
+
+  directorId  Int?
+  director    Director? @relation(fields: [directorId], references: [id], onDelete: SetNull)
+
+  reviews     Review[]
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  rating     Int
+  comment    String?
+  authorName String
+  createdAt  DateTime @default(now())
+
+  movieId    Int
+  movie      Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([movieId, authorName])
+}
+//validate нь schema файлыг шалгана. migrate dev нь PostgreSQL-д холбогдож, хүснэгтүүдийг бодитоор үүсгэнэ.
